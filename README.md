@@ -14,13 +14,14 @@ rightAdd(Gary,db) --> added from right
 get(Gary) --> [sa,db]
 set(Gary,[a,b]) --> set successfully
 get(Gary) --> [a,b]
-getAllKeys([^<>]) -->Gary
+getAllKeys(^(.)ary) -->Gary
 
 
 For running the server you need mongodb,java8 and maven to be installed in your machine.
 for mongodb you should have database with name: serverDb ,username:tcpServer and password:tcpServer.
 Tcp server persist data in keyValePairs collection.
 You can configure the database name,user and password in application.properties.
+The mongoDb should be running.
 For running the server:
 1. mvn clean install
 2. go to target directory of the project and run java -jar tcp-1-SNAPSHOT.jar
