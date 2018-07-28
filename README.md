@@ -1,5 +1,5 @@
 # tcpServer
-I have created the server using spring boot ,mongodb for persistent layer and ServerSocket for creating tcp socket.
+I have created the server using spring boot ,mongodb for persistent layer,lombok and ServerSocket for creating tcp socket.
 Used spring boot with spring-data mongodb for simplicity,while whole project is a maven project.
 The server socket listens for connections and sends   asynchronously request from client to appropriate  request handler.
 I have used ThreadPoolTaskExecutor with pool size of 5 which can be configured and changed desired.
