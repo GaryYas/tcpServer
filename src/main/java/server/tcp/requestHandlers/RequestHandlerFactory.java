@@ -9,6 +9,9 @@ import java.util.Map;
 
 /**
  * Created by Jary on 7/27/2018.
+ *
+ * factory class for request handler
+ * reqeust map is built during spring boot up each request is registers itself by its type.
  */
 @Component
 public class RequestHandlerFactory {
@@ -21,6 +24,8 @@ public class RequestHandlerFactory {
             requestHandlerMap.putIfAbsent(req.getType().name(),req);
         }
     }
+
+    //return the correct handler due to compatible command,which is the key in the map
     public RequestAction geRequestHandler(String request){
         RequestAction requestHandler =requestHandlerMap.get(request);
         if(requestHandler ==null)

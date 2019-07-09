@@ -2,6 +2,7 @@ package server.tcp;
 
 import javafx.util.Pair;
 import lombok.Data;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -26,6 +27,8 @@ public class RequestHandlerImp implements RequestHandler {
 
     @Autowired
     RequestHandlerFactory handlerFactoryRequest;
+    Logger logger = Logger.getLogger(RequestHandlerImp.class);
+
 
     public RequestHandlerImp(){
     }
@@ -35,10 +38,9 @@ public class RequestHandlerImp implements RequestHandler {
         handle();
     }
 
+    //handles tcp request and redirects it to the right handler
     public void handle(){
-        /*try(DataInputStream inFromClient = new DataInputStream(socket.getInputStream());
-            DataOutputStream outToClient = new DataOutputStream(socket.getOutputStream());
-        )*/
+
         try(InputStream input = socket.getInputStream();
             BufferedReader reader = new BufferedReader(new InputStreamReader(input));
             OutputStream outPut = socket.getOutputStream();
@@ -50,12 +52,18 @@ public class RequestHandlerImp implements RequestHandler {
                     Pair<String, String[]> commandParamsPair = getParsedMessage(reader);
                     RequestAction req = handlerFactoryRequest.geRequestHandler(commandParamsPair.getKey());
                     String result = req.handleRequest(commandParamsPair.getValue());
+
+                    logger.info("handled the request and got result:" + result + "going to return it to client");
+
                     writer.println(result);
                     writer.flush();
                 }
                    catch(Exception e){
-                    if(e.getMessage().equals("closed"))
-                        socket.close();
+                        if(e.getMessage().equals("closed")) {
+                            logger.error("closing server socket due to error",e);
+                            socket.close();
+                        }
+                    logger.error("got exception in handling the request",e);
                    }
             }
         }

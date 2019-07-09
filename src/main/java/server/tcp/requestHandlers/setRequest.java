@@ -1,5 +1,6 @@
 package server.tcp.requestHandlers;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import server.tcp.requestHandlers.types.Request;
@@ -18,6 +19,7 @@ public class setRequest implements RequestAction {
 
     @Autowired
     RequestExecutor requestExecutor;
+    Logger logger = Logger.getLogger(setRequest.class);
 
     @Override
     public String handleRequest(String[] args) {

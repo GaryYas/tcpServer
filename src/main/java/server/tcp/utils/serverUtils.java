@@ -1,6 +1,7 @@
 package server.tcp.utils;
 
 import javafx.util.Pair;
+import org.apache.log4j.Logger;
 import server.tcp.Server;
 
 import java.io.*;
@@ -14,14 +15,14 @@ import java.util.List;
  */
 public class serverUtils {
 
-    // InputStream inputStream = server.getInputStream();
-    //DataInputStream fromClient = new DataInputStream(inputStream)
 
+   static Logger logger = Logger.getLogger(serverUtils.class);
+    //parses the request from the socket buffered input stream and pair of command and arguments
     public static Pair<String,String[]> getParsedMessage(BufferedReader reader) throws Exception {
 
         {
                     String line = reader.readLine();
-
+                    logger.info("read line with content:" + line + " going to parse it");
                     if(line==null)
                         throw new Exception("closed");
 
@@ -40,10 +41,15 @@ public class serverUtils {
 
                     String[] args = lineToEvaluate.split(",");
 
+                    logger.info("finished parsing the line:" + line + " command is:" + command + " , arguments are:" + args);
+
                     return new Pair<>(command,args);
         }
     }
     public static List<String>parseSetArgs(List<String>arguments){
+
+        logger.info("is going to parse arguments for set action:" + arguments);
+
         int last = arguments.size()-1;
         arguments.set(0,arguments.get(0).substring(1));
         int sizeOfLastArg = arguments.get(last).length();

@@ -14,6 +14,7 @@ import java.util.List;
 
 /**
  * Created by Jary on 7/27/2018.
+ * data access level for storing values according it's key on the mongodb database
  */
 @Component
 public class KeyValueDalImp implements KeyValueDal {

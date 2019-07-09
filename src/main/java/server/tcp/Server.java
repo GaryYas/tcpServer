@@ -1,5 +1,6 @@
 package server.tcp;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.task.TaskExecutor;
@@ -22,6 +23,7 @@ public class Server {
     TaskExecutor requestExecutor;
     @Autowired
     private ApplicationContext applicationContext;
+    Logger logger = Logger.getLogger(Server.class);
 
 
 
@@ -31,6 +33,7 @@ public class Server {
         try{
             while(true) {
                 Socket socket = serverSocket.accept();
+                logger.info("received new tcp request");
                  RequestHandler handler = (RequestHandler)applicationContext.getBean(RequestHandlerImp.class);
                 handler.setSocket(socket);
                 requestExecutor.execute(handler);

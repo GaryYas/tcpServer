@@ -1,5 +1,6 @@
 package server.tcp.requestHandlers;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import server.tcp.requestHandlers.types.Request;
@@ -13,9 +14,12 @@ public class addRightRequest implements RequestAction {
 
     @Autowired
     RequestExecutor requestExecutor;
+    Logger logger = Logger.getLogger(addRightRequest.class);
 
     @Override
     public String handleRequest(String[] args) {
+
+        logger.info("is going to execute add right request");
 
         if(args.length!=2)
             return "incorrect number of arguments";
