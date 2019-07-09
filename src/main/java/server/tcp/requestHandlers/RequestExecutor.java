@@ -60,6 +60,7 @@ public class RequestExecutor {
 
     public List<String> get(String key){
       try {
+
           logger.info("is going to read all the values matching to the key:" + key);
           lock.readLock().lock();
           List<String> values = keyDataCache.get(key);
